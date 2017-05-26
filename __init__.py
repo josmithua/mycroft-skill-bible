@@ -13,9 +13,6 @@ class BibleSkill(MycroftSkill):
     def __init__(self):
         super(BibleSkill, self).__init__(name="BibleSkill")
 
-        # Verse of the day URL
-
-
     def initialize(self):
         self.load_data_files(dirname(__file__))
 
