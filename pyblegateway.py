@@ -3,6 +3,9 @@ import requests
 from bs4 import BeautifulSoup
 
 # Set this to your preferred default bible version.
+# A list of valid bible versions is available at:
+# www.biblegateway.com/versions/index.php
+# Ex: RVR1960, EVR-AR, LSG, etc
 BIBLE_VERSION = 'ESV'
 
 BASE_URL = 'https://www.biblegateway.com/'
@@ -53,11 +56,10 @@ def get_passage(passage, version=BIBLE_VERSION, vnums=False, vnum_brackets='[]')
                                                   'crossreference']):
                 junk.decompose()
 
-            # Remove weird and/or multiple whitespace characters with a space
+            # Remove weird and/or multiple whitespace characters
             result += re.sub('\s+', ' ', p.text) + ' '
 
         clean_reference = passage.h1.span.text
-        version = passage['class'][0].replace('version-', '')
 
         result += '\n{} {}\n\n'.format(clean_reference, version)
 
