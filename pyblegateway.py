@@ -58,9 +58,8 @@ def get_passage(passage, version=BIBLE_VERSION, vnums=False, vnum_brackets='[]')
 
             # Remove weird and/or multiple whitespace characters
             result += re.sub('\s+', ' ', p.text) + ' '
-
+            
         clean_reference = passage.h1.span.text
-
         result += '\n{} {}\n\n'.format(clean_reference, version)
-
+        
     return result.strip()
