@@ -5,9 +5,15 @@ from adapt.intent import IntentBuilder
 from mycroft.skills.core import MycroftSkill
 from mycroft.util.log import getLogger
 
+import pyblegateway
+
+# Set this to your preferred uttered bible version
+BIBLE_VERSION = 'KJV'
+
 __author__ = 'sm1th'
 
 LOGGER = getLogger(__name__)
+
 
 class BibleSkill(MycroftSkill):
     def __init__(self):
@@ -22,18 +28,12 @@ class BibleSkill(MycroftSkill):
         self.register_intent(votd_intent, self.handle_votd_intent)
 
     def handle_votd_intent(self, message):
-        votd_url = "https://www.biblegateway.com/usage/votd/rss/votd.rdf"
-        data = feedparser.parse(votd_url)
-        try:
-            verse = str(data['entries'][0]['content'][0]['value'])
-            reference = str(data['entries'][0]['title'])
-            self.speak_dialog("votd", data={"verse": verse,
-                                            "reference": reference})
-        except Exception as e:
-            self.speak("Sorry, something went wrong.")
+        verse, reference = pyblegateway.get_verse_of_the_day(BIBLE_VERSION).split()
+        self.speak_dialog("votd", data={"verse": verse, "reference": reference})
 
     def stop(self):
         pass
+
 
 def create_skill():
     return BibleSkill()
