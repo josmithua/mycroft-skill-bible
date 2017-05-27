@@ -5,7 +5,7 @@ from adapt.intent import IntentBuilder
 from mycroft.skills.core import MycroftSkill
 from mycroft.util.log import getLogger
 
-import pyblegateway
+import ./pyblegateway
 
 # Set this to your preferred uttered bible version
 BIBLE_VERSION = 'KJV'
