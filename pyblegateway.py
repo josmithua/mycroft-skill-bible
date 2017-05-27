@@ -61,4 +61,4 @@ def get_passage(passage, version=BIBLE_VERSION, vnums=False, vnum_brackets='[]')
 
         result += '\n{} {}\n\n'.format(clean_reference, version)
 
-    return result
+    return result.strip()
