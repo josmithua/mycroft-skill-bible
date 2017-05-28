@@ -16,7 +16,7 @@ def get_verse_of_the_day(version=BIBLE_VERSION):
     return get_passage(votd_ref, version)
 
 
-def get_passage(passage, version=BIBLE_VERSION, vnums=False, vnum_brackets='[]'):
+def get_passage(passage, version=BIBLE_VERSION, vnums=False, vnum_brackets=''):
     data = requests.get(BASE_URL + PASSAGE_URL, {'search': passage,
                                                  'version': version})
     soup = BeautifulSoup(data.content, 'html.parser')
@@ -34,19 +34,28 @@ def get_passage(passage, version=BIBLE_VERSION, vnums=False, vnum_brackets='[]')
             # 1 number if verse numbers are wanted
             for chapter_number in p.find_all('span', class_='chapternum'):
                 if vnums:
-                    chapter_number.replace_with(vnum_brackets[0] + '1'
-                                                + vnum_brackets[1] + ' ')
+                    chapter_number.replace_with(vnum_brackets[0] + '1' +
+                                                vnum_brackets[1] + ' ')
                 else:
                     chapter_number.decompose()
 
             # Deal with verse numbers
             for verse_number in p.find_all('sup', class_='versenum'):
-                if vnums:  # If wanted, enclose in defined brackets
-                    verse_number.replace_with(vnum_brackets[0] +
-                                              verse_number.text.strip() +
-                                              vnum_brackets[1] + ' ')
-                else:  # If not wanted, remove them
+                if not vnums:
                     verse_number.decompose()
+                elif vnums and vnum_brackets:  # Enclose in provided brackets
+                    if len(vnum_brackets) == 1:
+                        # One bracket provided to go on right side of number
+                        num_string = (verse_number.text.strip() +
+                                      vnum_brackets[0] + ' ')
+                    elif len(vnum_brackets) >= 2:
+                        # Two brackets provided to go on either side of number
+                        num_string = (vnum_brackets[0] +
+                                      verse_number.text.strip() +
+                                      vnum_brackets[1] + ' ')
+                    verse_number.replace_with(num_string)
+                else:  # If no brackets provided, leave how it was
+                    pass
 
             # Remove footnotes, crossrefs, etc
             for junk in p.find_all('sup', class_=['footnote',
