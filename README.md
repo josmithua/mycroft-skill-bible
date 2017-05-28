@@ -8,4 +8,4 @@ BibleGateway Verse of The Day:
 * Daily verse
 
 ## Issues:
-• It's not working. :D -.-
+• It's not working for me on my picroft. Others have got it working. If you have a some time to spare, please take a look and open a PR if you find any fixes :)
