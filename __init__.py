@@ -97,7 +97,7 @@ class BibleSkill(MycroftSkill):
         self.register_intent(votd_intent, self.handle_votd_intent)
 
     def handle_votd_intent(self, message):
-        verse, reference = pyblegateway.get_verse_of_the_day(BIBLE_VERSION).\
+        verse, reference = get_verse_of_the_day(BIBLE_VERSION).\
             split('\n')
         self.speak_dialog("votd", data={"verse": verse,
                                         "reference": reference})
