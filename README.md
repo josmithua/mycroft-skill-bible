@@ -1,5 +1,5 @@
 # mycroft-skill-bible
-A bible skill for mycroftAI
+A bible skill for mycroftAI. Uses BibleGateway.com to perform various bible passage lookup tasks, such as getting their verse of the day. More to come.
 
 ### Usage:
 BibleGateway Verse of The Day:
