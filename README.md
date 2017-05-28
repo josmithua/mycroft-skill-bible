@@ -8,4 +8,4 @@ BibleGateway Verse of The Day:
 * Daily verse
 
 ## Issues:
-• TODO: Need to clean the verse text, or else use a different method of retrieving the verse text. It currently has a bunch of garbage in it.
+• It's not working. :D -.-
